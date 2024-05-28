@@ -1,7 +1,6 @@
 'use client';
 
 import { SDKProvider, DisplayGate, useMiniApp } from '@tma.js/sdk-react';
-import { useEffect } from 'react';
 import { options } from './config/tma';
 
 function SDKProviderError({ error }: { error: unknown }) {

@@ -6,8 +6,8 @@ import Providers from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Kaka App',
-  description: 'Developed for TON',
+  title: 'LexiTON',
+  description: 'Developed for TON bootcamp',
 };
 
 export default function RootLayout({
