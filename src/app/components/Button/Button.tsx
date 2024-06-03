@@ -1,17 +1,16 @@
-import React from 'react'
-import styles from './Button.module.css'
+import { ButtonHTMLAttributes } from 'react';
+import styles from './Button.module.css';
 
-interface ButtonProps {
-    content: string,
-
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  content: string;
 }
 
-function Button({ content }: ButtonProps) {
-    return (
-        <button className={`w-full h-12 bg-black rounded-2xl my-1 text-white ${styles.button}`}>
-            {content}
-        </button>
-    )
+function Button({ content, ...props }: ButtonProps) {
+  return (
+    <button className={`my-1 h-12 w-full rounded-2xl bg-black text-white ${styles.button}`} {...props}>
+      {content}
+    </button>
+  );
 }
 
-export default Button
+export default Button;

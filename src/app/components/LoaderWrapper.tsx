@@ -1,34 +1,36 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
 import Loader from '@/app/components/Loader/Loader';
 import Header from '@/app/components/Header/Header';
 import BottomPanel from '@/app/components/BottomPanel/BottomPanel';
 
-const LoaderWrapper = ({ children }: Readonly<{
-    children: React.ReactNode;
+const LoaderWrapper = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
 }>) => {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 1500);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
 
-        return () => clearTimeout(timer);
-    }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
-    if (isLoading) {
-        return <Loader />;
-    }
+  if (isLoading) {
+    return <Loader />;
+  }
 
-    return (
-        <>
-            <Header />
-            <main className="flex-1 px-4 appear">{children}</main>
-            <BottomPanel />
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <main className="appear flex px-4">{children}</main>
+      <BottomPanel />
+    </>
+  );
 };
 
 export default LoaderWrapper;
