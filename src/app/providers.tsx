@@ -31,7 +31,8 @@ export default function Providers({
   return (
     <SDKProvider options={options}>
       <TonConnectUIProvider
-        manifestUrl={'https://901b-83-31-109-77.ngrok-free.app/tonconnect-manifest.json'}
+        // ngrok link before slash
+        manifestUrl={'/tonconnect-manifest.json'}
         uiPreferences={{ theme: THEME.DARK }}
       >
         <DisplayGate error={SDKProviderError} loading={SDKProviderLoading} initial={SDKInitialState}>
