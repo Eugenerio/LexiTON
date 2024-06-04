@@ -1,25 +1,45 @@
 'use client';
-import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
+
+import { TonConnectButton } from '@tonconnect/ui-react';
+import { Arrow, Coins } from '@/app/components/icons';
+import { useGame, useVisibleHeader } from '@/app/lib/hooks';
 import styles from './Header.module.css';
-import { Coins } from '@/app/components/icons';
-import { useVisibleHeader } from '@/app/lib/hooks';
 
 function Header() {
   const { visible, isGame } = useVisibleHeader();
-  // TODO: if this is not neccessary remove animation
+
   return (
     <div
-      className={`h-16 w-full ${styles.background} p-4 transition-transform duration-300 ${visible ? 'translate-y-0 transform' : '-translate-y-full transform'} ${isGame && 'hidden'}`}
+      className={`h-16 w-full ${styles.background} p-4 transition-transform duration-300 ${visible && !isGame ? 'translate-y-0 transform' : '-translate-y-full transform'}`}
     >
-      <div className="flex h-full w-full items-center justify-between">
-        <div className="flex h-6 w-16">
-          <Coins />
-          <span className={'ml-2'}>0</span>
+      {
+        <div className="flex h-full w-full items-center justify-between">
+          <div className="flex h-6 w-16">
+            <Coins />
+            <span className={'ml-2'}>0</span>
+          </div>
+          <TonConnectButton />
         </div>
-        <TonConnectButton />
-      </div>
+      }
     </div>
   );
 }
+
+export const GameHeader = () => {
+  const { formatTime, gameData, activeStep } = useGame();
+  return (
+    <div className={`h-16 w-full ${styles.background} translate-y-0 transform p-4 transition-transform duration-300`}>
+      <div className="flex h-full w-full items-center justify-between">
+        <div className="flex h-6 w-16">
+          <Arrow color={'#000'} className={'hover:cursor-pointer'} />
+          <span className={'ml-2'}>{formatTime()}</span>
+        </div>
+        <span>
+          {activeStep} / {gameData.length + 1}
+        </span>
+      </div>
+    </div>
+  );
+};
 
 export default Header;

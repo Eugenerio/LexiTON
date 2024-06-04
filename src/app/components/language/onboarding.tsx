@@ -23,7 +23,7 @@ const Onboarding = ({ handleOnboardingFinish }: Props) => {
   return (
     <div className={'flex min-h-full w-full flex-col px-2'}>
       <span className={'mt-1 text-center text-[2rem] font-bold'}>Choose language</span>
-      <div className={`max-h-[60%] w-full self-start overflow-y-scroll rounded-xl border p-2 shadow-xl`}>
+      <div className={`max-h-[320px] w-full self-start overflow-y-scroll rounded-xl border p-2 shadow-xl`}>
         {langs.map((item, index) => (
           <div
             key={`lang-${index}`}

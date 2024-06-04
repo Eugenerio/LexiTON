@@ -1,3 +1,4 @@
+'use client';
 import { useRouter, usePathname } from 'next/navigation';
 import { ChooseSkin, LeaderBoard, Home } from '@/app/components/icons/';
 import styles from './BottomPanel.module.css';
@@ -18,7 +19,7 @@ function BottomPanel() {
           <ChooseSkin className="h-6 w-6" />
         </div>
         <div
-          className={`flex w-full items-center justify-center py-4 hover:cursor-pointer ${currentPath === '/' ? 'bg-gray-300' : ''}`}
+          className={`flex w-full items-center justify-center py-4 hover:cursor-pointer ${currentPath === '/' || currentPath.startsWith('/single-mode') ? 'bg-gray-300' : ''}`}
           onClick={() => navigationHandler('/')}
         >
           <Home className="h-6 w-6" />

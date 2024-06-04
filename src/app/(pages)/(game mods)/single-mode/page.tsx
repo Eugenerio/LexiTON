@@ -21,12 +21,12 @@ const SingleMode = () => {
   }
 
   return (
-    <div className='w-full h-full'>
-      <h2 className='text-2xl text-medium'>Selected Languages:</h2>
+    <div className="h-full w-full">
+      <h2 className="text-medium text-2xl">Selected Languages:</h2>
       <h1>{isOnboardingWasFinished}</h1>
-      <div className='w-full h-96 bg-grey-100 overflow-y-scroll py-4'>
-        {selectedLanguagesKeys.map((language) => (
-          <CourseCard course={language} level={selectedLanguages[language]} />
+      <div className="bg-grey-100 h-96 w-full overflow-y-scroll py-4">
+        {selectedLanguagesKeys.map((language, index) => (
+          <CourseCard course={language} level={selectedLanguages[language]} key={`course-${index}`} />
         ))}
         <Button content={'Clear'} onClick={clearLocalStorage} />
         <Button content={'Add Language'} onClick={() => handleOnboardingShown(true)} />
