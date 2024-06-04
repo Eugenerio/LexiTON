@@ -9,3 +9,8 @@
 .rotateY180 {
   transform: rotateY(180deg);
 }
+
+.background{
+  background: url('../../images/LoaderBackground.png') !important;
+  background-size: contain;
+}
