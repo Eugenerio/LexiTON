@@ -7,7 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 function Button({ content, ...props }: ButtonProps) {
   return (
-    <button className={`my-1 h-12 w-full rounded-2xl bg-black text-white ${styles.button}`} {...props}>
+    <button className={`my-1 h-12 w-full rounded-2xl bg-black text-white ${styles.button} select-none`} {...props}>
       {content}
     </button>
   );

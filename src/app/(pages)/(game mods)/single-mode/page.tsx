@@ -3,6 +3,7 @@
 import Button from '@/app/components/Button/Button';
 import { Onboarding } from '@/app/components/language';
 import useSelectedLanguage from '@/app/lib/hooks/use-selected-language';
+import CourseCard from '@/app/components/CourseCard/CourseCard';
 
 const SingleMode = () => {
   const {
@@ -20,18 +21,16 @@ const SingleMode = () => {
   }
 
   return (
-    <div className={'flex flex-col'}>
-      <h2>Selected Languages:</h2>
+    <div className='w-full h-full'>
+      <h2 className='text-2xl text-medium'>Selected Languages:</h2>
       <h1>{isOnboardingWasFinished}</h1>
-      <ul>
+      <div className='w-full h-96 bg-grey-100 overflow-y-scroll py-4'>
         {selectedLanguagesKeys.map((language) => (
-          <li key={language}>
-            {language} - {selectedLanguages[language]}
-          </li>
+          <CourseCard course={language} level={selectedLanguages[language]} />
         ))}
-      </ul>
-      <Button content={'Clear'} onClick={clearLocalStorage} />
-      <Button content={'Add Language'} onClick={() => handleOnboardingShown(true)} />
+        <Button content={'Clear'} onClick={clearLocalStorage} />
+        <Button content={'Add Language'} onClick={() => handleOnboardingShown(true)} />
+      </div>
     </div>
   );
 };
