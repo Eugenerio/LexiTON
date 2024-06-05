@@ -1,3 +1,9 @@
 .background {
   box-shadow: 0px 2px 2px #b6b6b6;
 }
+
+
+.finish_bg{
+  background: url('../../images/LoaderBackground.png') !important;
+  background-size: contain;
+}

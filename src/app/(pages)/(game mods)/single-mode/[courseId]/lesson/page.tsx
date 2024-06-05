@@ -8,7 +8,7 @@ import { Arrow } from '@/app/components/icons';
 import { useGame } from '@/app/lib/hooks';
 
 const Page = () => {
-  const { isFinish, gameData, stepsHandler, activeStep, handleStart, timeRemaining, isActiveTimer, formatTime } =
+  const { isFinish, gameData, stepsHandler, activeStep, handleStart, isActiveTimer, formatTime, handleReset, timeForLesson, correctAnswers } =
     useGame();
 
   const router = useRouter();
@@ -19,6 +19,12 @@ const Page = () => {
     }
   }, []);
 
+  const backHandler = () => {
+    void handleReset();
+
+    router.push("/single-mode")
+  }
+
   return (
     <div>
       {!isFinish && (
@@ -26,7 +32,7 @@ const Page = () => {
           className={`h-16 w-full ${styles.background} translate-y-0 transform p-4 transition-transform duration-300`}
         >
           <div className="flex h-full w-full items-center justify-between">
-            <div className="flex h-6 hover:cursor-pointer" onClick={() => router.back()}>
+            <div className="flex h-6 hover:cursor-pointer" onClick={backHandler}>
               <Arrow color={'black'} className={'h-6 w-6 rotate-180'} />
               <span className={'ml-2'}>{formatTime()}</span>
             </div>
@@ -40,7 +46,23 @@ const Page = () => {
         <div className={'mt-5 w-full'}>
           {isFinish ? (
             <div className={'flex h-full w-full flex-col items-center justify-center'}>
-              <div>FINISH</div>
+              <div className={"font-bold text-2xl"}>Summary</div>
+              <div className={`w-full my-5 rounded-xl bg-black p-2`}>
+                <div className={`w-full text-white ${styles.finish_bg}`}>
+                  <div className={'w-full flex items-center justify-between'}>
+                    <span>Time</span>
+                    <span>{timeForLesson}</span>
+                  </div>
+                  <div className={'w-full flex items-center justify-between'}>
+                    <span>Questions</span>
+                    <span>{gameData.length}</span>
+                  </div>
+                  <div className={'w-full flex items-center justify-between'}>
+                    <span>Correct Answers</span>
+                    <span>{correctAnswers}</span>
+                  </div>
+                </div>
+              </div>
               <Button content={'Go home'} onClick={() => router.push('/')} />
             </div>
           ) : (
@@ -51,7 +73,7 @@ const Page = () => {
                   content={gameData[activeStep]?.first}
                   icon={<Arrow className={'h-6 w-6 rotate-180'} color={'#fff'} />}
                   className={'flex flex-row items-center justify-center'}
-                  onClick={stepsHandler}
+                  onClick={() => stepsHandler("first")}
                   iconPosition={'left'}
                 />
                 <Button
@@ -59,7 +81,7 @@ const Page = () => {
                   icon={<Arrow className={'h-6 w-6'} color={'#fff'} />}
                   iconPosition={'right'}
                   className={'ml-5 flex flex-row items-center justify-center'}
-                  onClick={stepsHandler}
+                  onClick={() => stepsHandler("second")}
                 />
               </div>
             </div>
