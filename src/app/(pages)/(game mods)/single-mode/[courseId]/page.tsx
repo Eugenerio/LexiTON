@@ -1,8 +1,8 @@
 'use client';
 import { useParams, useRouter } from 'next/navigation';
-import Button from '../../../../components/Button/Button';
-import FlipCard from '../../../../components/FlipCard/FlipCard';
-import { useGame } from '../../../../lib/hooks';
+import Button from '@/app/components/Button/Button';
+import FlipCard from '@/app/components/FlipCard/FlipCard';
+import { useGame } from '@/app/lib/hooks';
 
 function CoursePage() {
   const { setGameData } = useGame();

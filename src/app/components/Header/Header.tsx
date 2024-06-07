@@ -1,8 +1,8 @@
 'use client';
 
 import { TonConnectButton } from '@tonconnect/ui-react';
-import { Arrow, Coins } from '../icons';
-import { useGame, useVisibleHeader } from '../../lib/hooks';
+import { Arrow, Coins } from '@/app/components/icons';
+import { useGame, useVisibleHeader } from '@/app/lib/hooks';
 import styles from './Header.module.css';
 
 function Header() {

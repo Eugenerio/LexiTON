@@ -1,25 +1,15 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import Button from '../../../../../components/Button/Button';
-import FlipCard from '../../../../../components/FlipCard/FlipCard';
+import Button from '@/app/components/Button/Button';
+import FlipCard from '@/app/components/FlipCard/FlipCard';
 import styles from '@/app/components/Header/Header.module.css';
-import { Arrow } from '../../../../../components/icons';
-import { useGame } from '../../../../../lib/hooks';
+import { Arrow } from '@/app/components/icons';
+import { useGame } from '@/app/lib/hooks';
 
 const Page = () => {
-  const {
-    isFinish,
-    gameData,
-    stepsHandler,
-    activeStep,
-    handleStart,
-    isActiveTimer,
-    formatTime,
-    handleReset,
-    timeForLesson,
-    correctAnswers,
-  } = useGame();
+  const { isFinish, gameData, stepsHandler, activeStep, handleStart, isActiveTimer, formatTime, handleReset, timeForLesson, correctAnswers } =
+    useGame();
 
   const router = useRouter();
 
@@ -32,8 +22,8 @@ const Page = () => {
   const backHandler = () => {
     void handleReset();
 
-    router.push('/single-mode');
-  };
+    router.push("/single-mode")
+  }
 
   return (
     <div>
@@ -56,18 +46,18 @@ const Page = () => {
         <div className={'mt-5 w-full'}>
           {isFinish ? (
             <div className={'flex h-full w-full flex-col items-center justify-center'}>
-              <div className={'text-2xl font-bold'}>Summary</div>
-              <div className={`my-5 w-full rounded-xl bg-black p-2`}>
+              <div className={"font-bold text-2xl"}>Summary</div>
+              <div className={`w-full my-5 rounded-xl bg-black p-2`}>
                 <div className={`w-full text-white ${styles.finish_bg}`}>
-                  <div className={'flex w-full items-center justify-between'}>
+                  <div className={'w-full flex items-center justify-between'}>
                     <span>Time</span>
                     <span>{timeForLesson}</span>
                   </div>
-                  <div className={'flex w-full items-center justify-between'}>
+                  <div className={'w-full flex items-center justify-between'}>
                     <span>Questions</span>
                     <span>{gameData.length}</span>
                   </div>
-                  <div className={'flex w-full items-center justify-between'}>
+                  <div className={'w-full flex items-center justify-between'}>
                     <span>Correct Answers</span>
                     <span>{correctAnswers}</span>
                   </div>
@@ -83,7 +73,7 @@ const Page = () => {
                   content={gameData[activeStep]?.first}
                   icon={<Arrow className={'h-6 w-6 rotate-180'} color={'#fff'} />}
                   className={'flex flex-row items-center justify-center'}
-                  onClick={() => stepsHandler('first')}
+                  onClick={() => stepsHandler("first")}
                   iconPosition={'left'}
                 />
                 <Button
@@ -91,7 +81,7 @@ const Page = () => {
                   icon={<Arrow className={'h-6 w-6'} color={'#fff'} />}
                   iconPosition={'right'}
                   className={'ml-5 flex flex-row items-center justify-center'}
-                  onClick={() => stepsHandler('second')}
+                  onClick={() => stepsHandler("second")}
                 />
               </div>
             </div>
