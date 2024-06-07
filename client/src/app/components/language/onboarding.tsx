@@ -1,5 +1,5 @@
-import Button from '@/app/components/Button/Button';
-import { Check } from '@/app/components/icons';
+import Button from '../Button/Button';
+import { Check } from '../icons';
 import useSelectedLanguage, { LanguageLevel } from '../../lib/hooks/use-selected-language';
 
 const langs = [

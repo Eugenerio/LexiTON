@@ -1,6 +1,6 @@
 'use client';
 import { useRouter, usePathname } from 'next/navigation';
-import { ChooseSkin, LeaderBoard, Home } from '@/app/components/icons/';
+import { ChooseSkin, LeaderBoard, Home } from '../icons';
 import styles from './BottomPanel.module.css';
 
 function BottomPanel() {

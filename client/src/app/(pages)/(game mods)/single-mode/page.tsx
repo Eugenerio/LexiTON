@@ -1,9 +1,9 @@
 'use client';
 
-import Button from '@/app/components/Button/Button';
-import { Onboarding } from '@/app/components/language';
-import useSelectedLanguage from '@/app/lib/hooks/use-selected-language';
-import CourseCard from '@/app/components/CourseCard/CourseCard';
+import Button from '../../../components/Button/Button';
+import { Onboarding } from '../../../components/language';
+import useSelectedLanguage from '../../../lib/hooks/use-selected-language';
+import CourseCard from '../../../components/CourseCard/CourseCard';
 
 const SingleMode = () => {
   const {
