@@ -6,7 +6,7 @@ function Loader() {
     <div
       className={`fixed left-0 top-0 flex h-full w-full items-center justify-center bg-cover bg-center bg-no-repeat ${styles.background} ${styles.appear}`}
     >
-      <h1 className={`text-5xl font-bold ${styles.appear}`}>LexiTON</h1>
+      <h1 className={`text-5xl font-bold text-white ${styles.appear}`}>LexiTON</h1>
     </div>
   );
 }

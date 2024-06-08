@@ -37,7 +37,7 @@ function Header() {
       {
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex h-6 w-16">
-            <Coins />
+            <Coins className='text-white' />
             <span className={'ml-2'}>0</span>
           </div>
           <TonConnectButton />

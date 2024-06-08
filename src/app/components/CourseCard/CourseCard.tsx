@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import styles from './CourseCard.module.css'
 
 interface CourseCardProps {
   course: string;
@@ -18,7 +19,7 @@ function CourseCard({ course, level /* courseLink */ }: CourseCardProps) {
   return (
     <Link
       href={`/single-mode/${courseLink}`}
-      className="mb-3 flex h-40 w-full flex-col rounded-2xl border border-black transition-transform hover:cursor-pointer active:scale-95"
+      className={`mb-3 flex h-40 w-full flex-col rounded-2xl border border-black ${styles.background} transition-transform hover:cursor-pointer active:scale-95`}
     >
       <div className="relative h-40 w-full">
         <Image

@@ -33,7 +33,7 @@ const SingleMode = () => {
   }
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full mt-[-40px]">
       <h2 className="text-medium text-2xl">Selected Languages:</h2>
       <h1>{isOnboardingWasFinished}</h1>
       <div className="bg-grey-100 h-96 w-full overflow-y-scroll py-4">

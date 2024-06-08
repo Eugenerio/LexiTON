@@ -36,7 +36,7 @@ const Page = () => {
         >
           <div className="flex h-full w-full items-center justify-between">
             <div className="flex h-6 hover:cursor-pointer" onClick={backHandler}>
-              <Arrow color={'black'} className={'h-6 w-6 rotate-180'} />
+              <Arrow className={'h-6 w-6 rotate-180'} />
               <span className={'ml-2'}>{formatTime()}</span>
             </div>
             <span>
@@ -50,7 +50,7 @@ const Page = () => {
           {isFinish ? (
             <div className={'flex h-full w-full flex-col items-center justify-center'}>
               <div className={"font-bold text-2xl"}>Summary</div>
-              <div className={`w-full my-5 rounded-xl bg-black p-2`}>
+              <div className={`w-full my-5 rounded-xl bg-[#00000075] p-2`}>
                 <div className={`w-full text-white ${styles.finish_bg}`}>
                   <div className={'w-full flex items-center justify-between'}>
                     <span>Time</span>

@@ -2,3 +2,16 @@
   transition: transform 0.1s;
   transform: scale(0.95);
 }
+
+.button {
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  transition: background-color 0.1s;
+}
+
+.button:hover {
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(0, 0, 0, 0.75);
+}

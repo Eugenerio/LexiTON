@@ -13,8 +13,8 @@ function CoursePage() {
   };
   return (
     <div className="flex h-[400px] w-full flex-col items-center justify-between py-8">
-      <FlipCard title={'Polish'} description={'A Polish course that you might want to complete'} />
-      <p className="w-full select-none text-center text-gray-600">SWIPE TO ROTATE</p>
+      <FlipCard className='mt-[-50px]' title={'Polish'} description={'A Polish course that you might want to complete'} />
+      <p className="w-full select-none text-center text-white-600">SWIPE TO ROTATE</p>
       <Button content="Start the course" onClick={navigationHandler} />
     </div>
   );

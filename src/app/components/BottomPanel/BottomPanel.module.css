@@ -1,4 +1,11 @@
-.background {
-  box-shadow: 0px -2px 2px #b6b6b6;
-  background: #fff;
+.selected{
+  backdrop-filter: blur(70px) saturate(180%);
+  -webkit-backdrop-filter: blur(70px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+}
+
+.background{
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  background-color: rgba(39, 41, 45, 0.75);
 }

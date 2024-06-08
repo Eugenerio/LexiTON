@@ -16,9 +16,9 @@ const Onboarding = ({ handleOnboardingFinish }: Props) => {
   const { selectedLanguages, handleLanguageChange, isDisableButton } = useSelectedLanguage('selectedLanguages', {});
 
   return (
-    <div className={'flex min-h-full w-full flex-col px-2'}>
-      <span className={'mt-1 text-center text-[2rem] font-bold'}>Choose language</span>
-      <div className={`max-h-[320px] w-full self-start overflow-y-scroll rounded-xl border p-2 shadow-xl`}>
+    <div className={'flex min-h-full w-full flex-col px-2 '}>
+      <span className={'mt-1 text-center text-[2rem] font-bold mt-[-50px]'}>Choose language</span>
+      <div className={`max-h-[320px] w-full self-start overflow-y-scroll rounded-xl p-2 shadow-xl bg-[#00000075]`}>
         {langs.map((item, index) => (
           <div
             key={`lang-${index}`}
@@ -33,7 +33,7 @@ const Onboarding = ({ handleOnboardingFinish }: Props) => {
               return (
                 <div
                   key={`${item.lang}-${level}-${index}`}
-                  className={`my-1 ml-5 flex items-center justify-between rounded-md border px-2 ${isChoosen && 'bg-green-300'}`}
+                  className={`my-1 ml-5 flex items-center justify-between rounded-md border px-2 ${isChoosen && 'bg-[#8203b4]'}`}
                   onClick={() => handleLanguageChange(item.code, level as LanguageLevel)}
                 >
                   <span className={'ml-2'}>{level}</span>
@@ -44,7 +44,7 @@ const Onboarding = ({ handleOnboardingFinish }: Props) => {
           </div>
         ))}
       </div>
-      <Button content={'Choose'} onClick={handleOnboardingFinish} disabled={isDisableButton} />
+      <Button className='mt-3' content={'Choose'} onClick={handleOnboardingFinish} disabled={isDisableButton} />
     </div>
   );
 };

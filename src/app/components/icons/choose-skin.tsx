@@ -8,7 +8,7 @@ function Icon({ className }: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="#000"
+      fill="#fff"
       version="1.1"
       viewBox="0 0 480 480"
       xmlSpace="preserve"
