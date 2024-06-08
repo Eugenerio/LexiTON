@@ -1,15 +1,18 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Button from '@/app/components/Button/Button';
 import FlipCard from '@/app/components/FlipCard/FlipCard';
 import styles from '@/app/components/Header/Header.module.css';
 import { Arrow } from '@/app/components/icons';
+import { getLessonByLanguageAndLevel } from '@/app/lib/api';
 import { useGame } from '@/app/lib/hooks';
 
 const Page = () => {
+  const params = useParams();
+
   const { isFinish, gameData, stepsHandler, activeStep, handleStart, isActiveTimer, formatTime, handleReset, timeForLesson, correctAnswers } =
-    useGame();
+    useGame(params.courseId as string);
 
   const router = useRouter();
 
@@ -67,13 +70,13 @@ const Page = () => {
             </div>
           ) : (
             <div className={'flex w-full flex-col'}>
-              <FlipCard title={gameData[activeStep]?.title} description={gameData[activeStep]?.description} />
+              <FlipCard title={gameData[activeStep]?.word} description={gameData[activeStep]?.description} />
               <div className={'mt-5 flex flex-row items-center justify-between'}>
                 <Button
                   content={gameData[activeStep]?.first}
                   icon={<Arrow className={'h-6 w-6 rotate-180'} color={'#fff'} />}
                   className={'flex flex-row items-center justify-center'}
-                  onClick={() => stepsHandler("first")}
+                  onClick={() => stepsHandler(gameData[activeStep]?.first)}
                   iconPosition={'left'}
                 />
                 <Button
@@ -81,7 +84,7 @@ const Page = () => {
                   icon={<Arrow className={'h-6 w-6'} color={'#fff'} />}
                   iconPosition={'right'}
                   className={'ml-5 flex flex-row items-center justify-center'}
-                  onClick={() => stepsHandler("second")}
+                  onClick={() => stepsHandler(gameData[activeStep]?.second)}
                 />
               </div>
             </div>

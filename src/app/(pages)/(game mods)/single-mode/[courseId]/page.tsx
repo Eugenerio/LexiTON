@@ -2,15 +2,13 @@
 import { useParams, useRouter } from 'next/navigation';
 import Button from '@/app/components/Button/Button';
 import FlipCard from '@/app/components/FlipCard/FlipCard';
-import { useGame } from '@/app/lib/hooks';
+
 
 function CoursePage() {
-  const { setGameData } = useGame();
   const router = useRouter();
   const params = useParams();
 
-  const navigationHandler = () => {
-    // setGameData(mockedData);
+  const navigationHandler = async () => {
     router.push(`/single-mode/${params.courseId}/lesson`);
   };
   return (

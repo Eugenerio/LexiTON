@@ -4,14 +4,9 @@ import useSelectedLanguage, { LanguageLevel } from '../../lib/hooks/use-selected
 
 const langs = [
   {
-    lang: 'English',
-    code: 'ENG',
-    levels: ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
-  },
-  {
     lang: 'Polish',
     code: 'PL',
-    levels: ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
+    levels: ['A1', 'B1'],
   },
 ];
 interface Props {

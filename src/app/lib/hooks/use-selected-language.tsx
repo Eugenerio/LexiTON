@@ -1,6 +1,9 @@
 'use client';
 
+import { useTonAddress } from '@tonconnect/ui-react';
+import { collection, doc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
+import { db } from '@/app/lib/firebase';
 
 export type LanguageLevel = 'a1' | 'a2' | 'b1' | 'b2' | 'c1' | 'c2';
 
@@ -8,47 +11,91 @@ export interface SelectedLanguages {
   [language: string]: LanguageLevel;
 }
 
-const useSelectedLanguage = (key: string, initialValue: SelectedLanguages) => {
-  const [selectedLanguages, setSelectedLanguages] = useState<SelectedLanguages>(() => {
-    const storedValue = localStorage.getItem(key);
-    return storedValue !== null ? JSON.parse(storedValue) : initialValue;
-  });
+const useSelectedLanguage = (userId: string, initialValue: SelectedLanguages) => {
+  const address = useTonAddress();
 
-  const [isOnboardingWasFinished, setIsOnboardingWasFinished] = useState<boolean>(() => {
-    const storedValue = localStorage.getItem('onboarding');
-    return storedValue !== null ? JSON.parse(storedValue) : false;
-  });
-
+  const [selectedLanguages, setSelectedLanguages] = useState<SelectedLanguages>(initialValue);
+  const [isOnboardingWasFinished, setIsOnboardingWasFinished] = useState<boolean>(false);
   const [isShowOnboarding, setIsShowOnboarding] = useState<boolean>(false);
 
   const selectedLanguagesKeys = Object.keys(selectedLanguages);
   const isDisableButton = selectedLanguagesKeys.length === 0;
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(selectedLanguages));
-  }, [selectedLanguages]);
+    const fetchUserData = async () => {
+      try {
+        const userRef = collection(db, "user");
+        const q = query(userRef, where("wallet_address", "==", address));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userDoc = querySnapshot.docs[0];
+          const userData = userDoc.data();
+          if (userData) {
+            setSelectedLanguages(userData.choosen_lang || initialValue);
+            setIsOnboardingWasFinished(userData.onboarding || false);
+          }
+        } else {
+          const userDocRef = doc(userRef);
+          await setDoc(userDocRef, { choosen_lang: initialValue, onboarding: false });
+        }
+      } catch (error) {
+        console.error('Error fetching user data: ', error);
+      }
+    };
+
+    void fetchUserData();
+  }, []);
+
 
   const handleOnboardingShown = (value: boolean) => {
     setIsShowOnboarding(value);
   };
 
+
   const handleLanguageChange = (language: string, level: LanguageLevel) => {
-    setSelectedLanguages((prevSelectedLanguages) => ({
-      ...prevSelectedLanguages,
+    const updatedLanguages = {
+      ...selectedLanguages,
       [language]: level,
-    }));
+    };
+    setSelectedLanguages(updatedLanguages);
+    void updateUserData(updatedLanguages);
+  };
+  const updateUserData = async (updatedLanguages: SelectedLanguages) => {
+    try {
+      const userRef = collection(db, "user");
+      const q = query(userRef, where("wallet_address", "==", address));
+      const querySnapshot = await getDocs(q);
+
+      if(querySnapshot.empty){
+        throw new Error("No user found with the provided wallet address");
+      }
+
+      const userDoc = querySnapshot.docs[0].ref;
+      await updateDoc(userDoc, { choosen_lang: updatedLanguages });
+    } catch (error) {
+      console.error('Error updating user data: ', error);
+    }
   };
 
-  const handleOnboardingFinish = () => {
-    localStorage.setItem('onboarding', JSON.stringify(true));
+  const handleOnboardingFinish = async () => {
+    try {
+      const userRef = collection(db, "user");
+      const q = query(userRef, where("wallet_address", "==", address));
+      const querySnapshot = await getDocs(q);
 
-    setIsOnboardingWasFinished(true);
-    setIsShowOnboarding(false);
-  };
+      if(querySnapshot.empty){
+        throw new Error("No user found with the provided wallet address");
+      }
 
-  const clearLocalStorage = () => {
-    localStorage.clear();
-    setIsOnboardingWasFinished(false);
+      const userDoc = querySnapshot.docs[0].ref;
+      await updateDoc(userDoc, { onboarding: true });
+
+      setIsOnboardingWasFinished(true);
+      setIsShowOnboarding(false);
+    } catch (error) {
+      console.error('Error finishing onboarding: ', error);
+    }
   };
 
   return {
@@ -56,7 +103,6 @@ const useSelectedLanguage = (key: string, initialValue: SelectedLanguages) => {
     setSelectedLanguages,
     handleOnboardingFinish,
     isOnboardingWasFinished,
-    clearLocalStorage,
     isDisableButton,
     handleLanguageChange,
     isShowOnboarding,

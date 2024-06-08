@@ -13,7 +13,7 @@ interface CourseCardProps {
 }
 
 function CourseCard({ course, level /* courseLink */ }: CourseCardProps) {
-  const courseLink = 'amockcourselink';
+  const courseLink = `${course}:${level}`;
 
   return (
     <Link
