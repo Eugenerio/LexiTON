@@ -13,4 +13,5 @@
 .background{
   background: url('../../images/LoaderBackground.png') !important;
   background-size: contain;
+  overflow: hidden;
 }

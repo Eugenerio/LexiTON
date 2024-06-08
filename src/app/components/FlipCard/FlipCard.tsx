@@ -20,12 +20,12 @@ function FlipCard({ title, description }: Props) {
             onClick={handleFlip}
         >
             {/* Front Side */}
-            <div className={`absolute w-full h-full ${styles.background} rounded-lg shadow-lg rounded-3xl flex justify-center items-center ${styles.backfaceHidden}`}>
+            <div className={`absolute w-full h-full ${styles.background} shadow-lg rounded-3xl flex justify-center items-center ${styles.backfaceHidden}`}>
                 <h3 className="text-2xl font-bold">{title}</h3>
             </div>
 
             {/* Back Side */}
-            <div className={`absolute w-full h-full rounded-lg shadow-lg rounded-3xl flex justify-center text-center items-center ${styles.backfaceHidden} ${styles.rotateY180}`}>
+            <div className={`absolute w-full h-full shadow-lg rounded-3xl flex justify-center text-center items-center ${styles.backfaceHidden} ${styles.rotateY180}`}>
                 <h1 className='text-6xl font-bold absolute opacity-20 select-none'>LexiTON</h1>
                 <p className="p-4 text-lg">{description}</p>
             </div>
