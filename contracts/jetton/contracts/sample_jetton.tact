@@ -1,3 +1,4 @@
+
 import "@stdlib/ownable";
 
 message Mint {

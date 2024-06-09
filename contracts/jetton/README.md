@@ -1,4 +1,4 @@
-# contracts
+# lxt-contracts
 
 ## Project structure
 
