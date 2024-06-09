@@ -17,7 +17,12 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
   background-image: linear-gradient(45deg, #2d22be 0%, #8203b4 70%);
 }
 
