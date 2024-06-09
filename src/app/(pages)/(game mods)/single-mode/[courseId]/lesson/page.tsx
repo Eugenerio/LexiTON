@@ -24,9 +24,15 @@ const Page = () => {
 
   const backHandler = () => {
     void handleReset();
+    console.log("Navigating to /single-mode...");
+    router.push("/game-mods/single-mode");
+  };
 
-    router.push("/single-mode")
-  }
+  const goHomeHandler = () => {
+    void handleReset();
+    console.log('Navigating to home...');
+    router.push("/");
+  };
 
   return (
     <div>
@@ -66,7 +72,7 @@ const Page = () => {
                   </div>
                 </div>
               </div>
-              <Button content={'Go home'} onClick={() => router.push('/')} />
+              <Button content={'Go home'} onClick={goHomeHandler} />
             </div>
           ) : (
             <div className={'flex w-full flex-col'}>

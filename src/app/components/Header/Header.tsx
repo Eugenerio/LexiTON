@@ -1,12 +1,13 @@
 'use client';
 
-import { TonConnectButton, useTonAddress } from '@tonconnect/ui-react';
+import { TonConnectButton, useTonAddress, CHAIN } from '@tonconnect/ui-react';
 import { useTonWallet } from '@tonconnect/ui-react';
 import { useEffect } from 'react';
 import { Arrow, Coins } from '@/app/components/icons';
 import { setUser } from '@/app/lib/api';
 import { useGame, useVisibleHeader } from '@/app/lib/hooks';
 import styles from './Header.module.css';
+import { useTonConnect } from '@/app/hooks/useTonConnect';
 
 function Header() {
   const { visible, isGame } = useVisibleHeader();
@@ -18,7 +19,7 @@ function Header() {
   const isWalletConnected = !!wallet?.account;
   useEffect(() => {
     const fetchData = async () => {
-      if(isWalletConnected) {
+      if (isWalletConnected) {
         await setUser({
           wallet_address: address,
           score: 0,
@@ -29,6 +30,7 @@ function Header() {
 
     void fetchData();
   }, [isWalletConnected])
+  const { network } = useTonConnect();
 
   return (
     <div
