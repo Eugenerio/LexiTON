@@ -38,7 +38,7 @@ const Page = () => {
     <div>
       {!isFinish && (
         <div
-          className={`h-16 w-full ${styles.background} translate-y-0 transform p-4 transition-transform duration-300`}
+          className={`h-16 absolute top-0 left-0 w-full ${styles.background} translate-y-0 transform p-4 transition-transform duration-300`}
         >
           <div className="flex h-full w-full items-center justify-between">
             <div className="flex h-6 hover:cursor-pointer" onClick={backHandler}>
@@ -52,7 +52,7 @@ const Page = () => {
         </div>
       )}
       <main className="appear flex px-4">
-        <div className={'mt-5 w-full'}>
+        <div className={'mt-5 ml-[-18px] w-[300px]'}>
           {isFinish ? (
             <div className={'flex h-full w-full flex-col items-center justify-center'}>
               <div className={"font-bold text-2xl"}>Summary</div>
@@ -75,7 +75,7 @@ const Page = () => {
               <Button content={'Go home'} onClick={goHomeHandler} />
             </div>
           ) : (
-            <div className={'flex w-full flex-col'}>
+            <div className={'flex w-80 flex-col'}>
               <FlipCard title={gameData[activeStep]?.word} description={gameData[activeStep]?.definition} />
               <div className={'mt-5 flex flex-row items-center justify-between'}>
                 <Button
