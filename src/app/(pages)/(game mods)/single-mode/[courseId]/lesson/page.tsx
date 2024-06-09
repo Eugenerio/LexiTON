@@ -76,7 +76,7 @@ const Page = () => {
             </div>
           ) : (
             <div className={'flex w-full flex-col'}>
-              <FlipCard title={gameData[activeStep]?.word} description={gameData[activeStep]?.description} />
+              <FlipCard title={gameData[activeStep]?.word} description={gameData[activeStep]?.definition} />
               <div className={'mt-5 flex flex-row items-center justify-between'}>
                 <Button
                   content={gameData[activeStep]?.first}
