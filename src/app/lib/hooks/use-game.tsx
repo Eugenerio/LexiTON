@@ -1,10 +1,13 @@
 'use client';
 
+import { useTonAddress } from '@tonconnect/ui-react';
 import { useEffect, useState } from 'react';
-import { getLessonByLanguageAndLevel } from '@/app/lib/api';
+import { getLessonByLanguageAndLevel, updateUserScore } from '@/app/lib/api';
 
 
 const useGame = (courseLevel?: string) => {
+  const address = useTonAddress();
+
   const [gameData, setGameData] = useState<any[]>([]);
 
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -47,11 +50,17 @@ const useGame = (courseLevel?: string) => {
 
 
   useEffect(() => {
-    if (isFinish) {
-      setTimeForLesson(() => formatTime())
-      setIsActiveTimer(false);
-      setIsFinishedTimer(true);
+    const fetchData = async() => {
+      if (isFinish) {
+        setTimeForLesson(() => formatTime())
+        setIsActiveTimer(false);
+        setIsFinishedTimer(true);
+
+        await updateUserScore(address, correctAnswers * 10)
+      }
     }
+
+    void fetchData();
   }, [isFinish]);
 
   const handleStart = () => {
