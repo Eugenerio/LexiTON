@@ -1,35 +1,22 @@
-import { getHttpEndpoint } from "@orbs-network/ton-access";
-import {
-  Address,
-  Slice,
-  TonClient,
-  TupleReader,
-  TupleItemCell,
-  TupleItemInt,
-} from "ton";
-import { Sha256 } from "@aws-crypto/sha256-js";
-import axios from "axios";
-import { parseDict } from "ton-core/dist/dict/parseDict";
-import { bitsToPaddedBuffer } from "ton-core/dist/boc/utils/paddedBits";
+import { getHttpEndpoint } from '@orbs-network/ton-access';
+import { Address, Slice, TonClient, TupleReader, TupleItemCell, TupleItemInt } from 'ton';
+import { Sha256 } from '@aws-crypto/sha256-js';
+import axios from 'axios';
+import { parseDict } from '@ton/core/dist/dict/parseDict';
+import { bitsToPaddedBuffer } from '@ton/core/dist/boc/utils/paddedBits';
 
-type persistenceType = "onchain" | "offchain_private_domain" | "offchain_ipfs";
+type persistenceType = 'onchain' | 'offchain_private_domain' | 'offchain_ipfs';
 
-type JettonMetaDataKeys =
-  | "name"
-  | "description"
-  | "image"
-  | "symbol"
-  | "image_data"
-  | "decimals";
+type JettonMetaDataKeys = 'name' | 'description' | 'image' | 'symbol' | 'image_data' | 'decimals';
 
 const jettonOnChainMetadataSpec: {
-  [key in JettonMetaDataKeys]: "utf8" | "ascii" | undefined;
+  [key in JettonMetaDataKeys]: 'utf8' | 'ascii' | undefined;
 } = {
-  name: "utf8",
-  description: "utf8",
-  image: "ascii",
-  decimals: "utf8",
-  symbol: "utf8",
+  name: 'utf8',
+  description: 'utf8',
+  image: 'ascii',
+  decimals: 'utf8',
+  symbol: 'utf8',
   image_data: undefined,
 };
 
@@ -43,10 +30,7 @@ const sha256 = (str: string) => {
   return Buffer.from(sha.digestSync());
 };
 
-async function readContent(res: {
-  gas_used: number;
-  stack: TupleReader;
-}): Promise<{
+async function readContent(res: { gas_used: number; stack: TupleReader }): Promise<{
   persistenceType: persistenceType;
   metadata: { [s in JettonMetaDataKeys]?: string };
   isJettonDeployerFaultyOnChainData?: boolean;
@@ -57,34 +41,29 @@ async function readContent(res: {
   switch (contentSlice.loadUint(8)) {
     case ONCHAIN_CONTENT_PREFIX:
       return {
-        persistenceType: "onchain",
+        persistenceType: 'onchain',
         ...parseJettonOnchainMetadata(contentSlice),
       };
     case OFFCHAIN_CONTENT_PREFIX:
-      const { metadata, isIpfs } = await parseJettonOffchainMetadata(
-        contentSlice
-      );
+      const { metadata, isIpfs } = await parseJettonOffchainMetadata(contentSlice);
       return {
-        persistenceType: isIpfs ? "offchain_ipfs" : "offchain_private_domain",
+        persistenceType: isIpfs ? 'offchain_ipfs' : 'offchain_private_domain',
         metadata,
       };
     default:
-      throw new Error("Unexpected jetton metadata content prefix");
+      throw new Error('Unexpected jetton metadata content prefix');
   }
 }
 
 async function readJettonWalletMedata(client: TonClient, address: string) {
-  const walletData = await client.runMethod(
-    Address.parse(address),
-    "get_wallet_data"
-  );
+  const walletData = await client.runMethod(Address.parse(address), 'get_wallet_data');
   walletData.stack.skip(2);
   return readJettonMetadata(client, walletData.stack.readAddress().toString());
 }
 
 async function readNftItemMetadata(client: TonClient, address: string) {
   const nftItemAddress = Address.parse(address);
-  const nftData = await client.runMethod(nftItemAddress, "get_nft_data");
+  const nftData = await client.runMethod(nftItemAddress, 'get_nft_data');
   nftData.stack.skip(1);
   const index = nftData.stack.readBigNumber();
   const collection_address = nftData.stack.readAddress();
@@ -92,26 +71,20 @@ async function readNftItemMetadata(client: TonClient, address: string) {
   const individual_item_content = nftData.stack.readCell();
 
   const arg1: TupleItemInt = {
-    type: "int",
+    type: 'int',
     value: index,
   };
 
   const arg2: TupleItemCell = {
-    type: "cell",
+    type: 'cell',
     cell: individual_item_content,
   };
 
-  const nftCollectionContent = await client.runMethod(
-    collection_address,
-    "get_nft_content",
-    [arg1, arg2]
-  );
+  const nftCollectionContent = await client.runMethod(collection_address, 'get_nft_content', [arg1, arg2]);
 
   let linkSlice = nftCollectionContent.stack.readCell().beginParse();
 
-  const pathBase = bitsToPaddedBuffer(
-    linkSlice.loadBits(linkSlice.remainingBits)
-  ).toString();
+  const pathBase = bitsToPaddedBuffer(linkSlice.loadBits(linkSlice.remainingBits)).toString();
 
   linkSlice = individual_item_content.beginParse();
   const remainingBits = linkSlice.remainingBits;
@@ -120,9 +93,7 @@ async function readNftItemMetadata(client: TonClient, address: string) {
     return (await axios.get(pathBase)).data;
   }
 
-  const pathItem = bitsToPaddedBuffer(
-    linkSlice.loadBits(linkSlice.remainingBits)
-  ).toString();
+  const pathItem = bitsToPaddedBuffer(linkSlice.loadBits(linkSlice.remainingBits)).toString();
 
   return (await axios.get(pathBase + pathItem)).data;
 }
@@ -136,10 +107,7 @@ async function readNftMetadata(
   isJettonDeployerFaultyOnChainData?: boolean;
 }> {
   const nftCollectionAddress = Address.parse(address);
-  const res = await client.runMethod(
-    nftCollectionAddress,
-    "get_collection_data"
-  );
+  const res = await client.runMethod(nftCollectionAddress, 'get_collection_data');
   res.stack.skip(1);
 
   return await readContent(res);
@@ -155,7 +123,7 @@ async function readJettonMetadata(
 }> {
   const jettonMinterAddress = Address.parse(address);
 
-  const res = await client.runMethod(jettonMinterAddress, "get_jetton_data");
+  const res = await client.runMethod(jettonMinterAddress, 'get_jetton_data');
   res.stack.skip(3);
 
   return await readContent(res);
@@ -171,12 +139,11 @@ function parseJettonOnchainMetadata(contentSlice: Slice): {
   let isJettonDeployerFaultyOnChainData = false;
 
   const dict = parseDict(contentSlice.loadRef().beginParse(), KEYLEN, (s) => {
-    let buffer = Buffer.from("");
+    let buffer = Buffer.from('');
 
     const sliceToVal = (s: Slice, v: Buffer, isFirst: boolean) => {
       s.asCell().beginParse();
-      if (isFirst && s.loadUint(8) !== SNAKE_PREFIX)
-        throw new Error("Only snake format is supported");
+      if (isFirst && s.loadUint(8) !== SNAKE_PREFIX) throw new Error('Only snake format is supported');
 
       const bits = s.remainingBits;
       const bytes = bitsToPaddedBuffer(s.loadBits(bits));
@@ -200,7 +167,7 @@ function parseJettonOnchainMetadata(contentSlice: Slice): {
 
   Object.keys(jettonOnChainMetadataSpec).forEach((k) => {
     const val = dict
-      .get(toKey(sha256(k).toString("hex")))
+      .get(toKey(sha256(k).toString('hex')))
       ?.toString(jettonOnChainMetadataSpec[k as JettonMetaDataKeys]);
     if (val) res[k as JettonMetaDataKeys] = val;
   });
@@ -216,9 +183,7 @@ async function parseJettonOffchainMetadata(contentSlice: Slice): Promise<{
 }> {
   const bits = contentSlice.remainingBits;
   const bytes = bitsToPaddedBuffer(contentSlice.loadBits(bits));
-  const jsonURI = bytes
-    .toString("ascii")
-    .replace("ipfs://", "https://ipfs.io/ipfs/");
+  const jsonURI = bytes.toString('ascii').replace('ipfs://', 'https://ipfs.io/ipfs/');
 
   return {
     metadata: (await axios.get(jsonURI)).data,
@@ -227,20 +192,14 @@ async function parseJettonOffchainMetadata(contentSlice: Slice): Promise<{
 }
 
 async function main() {
-  const endpoint = await getHttpEndpoint({ network: "testnet" });
+  const endpoint = await getHttpEndpoint({ network: 'testnet' });
   const client = new TonClient({ endpoint });
   // const jettonData = await readJettonMetadata(
   //   client,
   //   "EQANasbzD5wdVx0qikebkchrH64zNgsB38oC9PVu7rG16qNB"
   // );
-  const nftData = await readNftMetadata(
-    client,
-    "EQAF4ilq66WK4zIeLPLiFwV5hv1a0-l-wGK12v0qvZbVREwo"
-  );
-  const nftItemData = await readNftItemMetadata(
-    client,
-    "EQCKW7UEgcRgcUiBxHoBaQBqOP9XyxQ1o-whcH7pIymF4Zld"
-  );
+  const nftData = await readNftMetadata(client, 'EQAF4ilq66WK4zIeLPLiFwV5hv1a0-l-wGK12v0qvZbVREwo');
+  const nftItemData = await readNftItemMetadata(client, 'EQCKW7UEgcRgcUiBxHoBaQBqOP9XyxQ1o-whcH7pIymF4Zld');
   // const jettonWalletData = await readJettonWalletMedata(
   //   client,
   //   "EQBhxsx1cHE34hrAM-hRRv7c26G57pe2G6Iw1LTn_5hOuRoV"

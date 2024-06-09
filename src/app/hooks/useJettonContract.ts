@@ -1,7 +1,7 @@
-import { Address, fromNano, OpenedContract, toNano } from '@ton/core';
 import { useEffect, useState } from 'react';
-import { JettonDefaultWallet, MintPublic } from '../../../contracts/jetton/build/SampleJetton/tact_JettonDefaultWallet';
-import { SampleJetton, Mint } from '../../../contracts/jetton/build/SampleJetton/tact_SampleJetton';
+import { Address, fromNano, OpenedContract, toNano } from '@ton/core';
+import { Mint, SampleJetton } from '../wrapers/SampleJetton';
+import { JettonDefaultWallet } from '../wrapers/SampleJettonWallet';
 import { useAsyncInitialize } from './useAsyncInitialize';
 import { useTonClient } from './useTonClient';
 import { useTonConnect } from './useTonConnect';
@@ -16,9 +16,9 @@ export function useJettonContract() {
   const jettonContract = useAsyncInitialize(async () => {
     if (!client || !wallet) return;
 
-    const contract = SampleJetton.fromAddress(Address.parse('EQB-xtCBQgzwKyxwXhzbUtdElYcblrwknHnUzVydaGgwpiwm'));
+    const contract = SampleJetton.fromAddress(Address.parse('EQDctB0e2KbXRnayQZzVljgTOIKMJ_dl07dXuuUT2WXO1fOA'));
 
-    return client.open(contract) as OpenedContract<SampleJetton>;
+    return client.open(contract);
   }, [client, wallet]);
 
   const jettonWalletContract = useAsyncInitialize(async () => {
@@ -47,10 +47,11 @@ export function useJettonContract() {
   return {
     jettonWalletAddress: jettonWalletContract?.address.toString(),
     balance: balance,
-    mint: (amount): number => {
-      const message: MintPublic = {
-        $$type: 'MintPublic',
-        amount: amount,
+    mint: () => {
+      const message: Mint = {
+        $$type: 'Mint',
+        amount: 1000000000000000000000000n,
+        receiver: sender.address as Address,
       };
 
       jettonContract?.send(
