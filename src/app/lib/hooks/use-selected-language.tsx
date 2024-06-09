@@ -37,7 +37,7 @@ const useSelectedLanguage = (userId: string, initialValue: SelectedLanguages) =>
           }
         } else {
           const userDocRef = doc(userRef);
-          await setDoc(userDocRef, { choosen_lang: initialValue, onboarding: false });
+          await updateDoc(userDocRef, { choosen_lang: initialValue, onboarding: false });
         }
       } catch (error) {
         console.error('Error fetching user data: ', error);

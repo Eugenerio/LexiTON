@@ -20,7 +20,6 @@ export const getLessons = async (address: string) => {
     const lessons: any[] = [];
 
     for (const [lang, level] of Object.entries(userInfo.choosen_lang)) {
-      // Create a query against the collection for each language and level combination
       const lessonsCol = collection(db, 'lessons');
       const q = query(lessonsCol, where('lang', '==', lang), where('level', '==', level));
 
@@ -68,6 +67,7 @@ interface User {
   };
   onboarding: boolean;
 }
+
 export const setUser = async (user: User) => {
   try {
     const userRef = collection(db, "user");
@@ -75,17 +75,19 @@ export const setUser = async (user: User) => {
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
+      console.log("User with this wallet address already exists.");
       return;
     }
 
     const generatedDocId = uuid4();
-    const userDoc = doc(collection(db, "user"), generatedDocId);
+    const userDoc = doc(userRef, generatedDocId);
 
     await setDoc(userDoc, user);
+    console.log("User successfully created.");
   } catch (e) {
-    console.log("Error while creating user model", e);
+    console.error("Error while creating user model:", e);
   }
-}
+};
 
 export const updateUserScore = async (wallet_address: string, score: number) => {
   try {
