@@ -1,6 +1,7 @@
 import { Address, fromNano, OpenedContract, toNano } from '@ton/core';
 import { useEffect, useState } from 'react';
 import { JettonDefaultWallet } from '../../../contracts/jetton/build/SampleJetton/tact_JettonDefaultWallet';
+import { SampleJetton, Mint } from '../../../contracts/jetton/build/SampleJetton/tact_SampleJetton';
 import { useAsyncInitialize } from './useAsyncInitialize';
 import { useTonClient } from './useTonClient';
 import { useTonConnect } from './useTonConnect';
@@ -49,7 +50,7 @@ export function useJettonContract() {
     mint: () => {
       const message: Mint = {
         $$type: 'Mint',
-        amount: 1000000000000000000000000n,
+        amount: 150n,
         receiver: sender.address as Address,
       };
 
