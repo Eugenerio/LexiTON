@@ -1,19 +1,14 @@
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './CourseCard.module.css'
+import imgUrl from "./images.png";
 
 interface CourseCardProps {
   course: string;
-  /*course {
-        name: string,
-        id: number,
-        link: string
-    }*/
   level: string;
 }
 
-function CourseCard({ course, level /* courseLink */ }: CourseCardProps) {
+function CourseCard({ course, level }: CourseCardProps) {
   const courseLink = `${course}:${level}`;
 
   return (
@@ -23,7 +18,7 @@ function CourseCard({ course, level /* courseLink */ }: CourseCardProps) {
     >
       <div className="relative h-40 w-full">
         <Image
-          src=""
+          src={imgUrl}
           layout="fill"
           objectFit="cover"
           alt="Course picture"

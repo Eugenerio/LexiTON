@@ -39,7 +39,7 @@ const SingleMode = () => {
       <div className="bg-grey-100 h-96 w-full overflow-y-scroll py-4">
         {
           langs?.map((item: any, index:number) => (
-            <CourseCard course={item.lang} level={item.level} key={`course-${index}`}/>
+              <CourseCard course={item.lang} level={item.level} key={`course-${index}`}/>
           ))
         }
         <Button content={'Add Language'} onClick={() => handleOnboardingShown(true)} />
