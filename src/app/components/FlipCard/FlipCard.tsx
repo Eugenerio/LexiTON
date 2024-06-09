@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import styles from './FlipCard.module.css';
+import Image from 'next/image';
+import logo from '@/app/images/logo.png'
 
 interface Props {
     title: string;
@@ -27,10 +29,9 @@ function FlipCard({ title, description, className }: Props) {
             const diffX = x - startPoint.x;
             const diffY = y - startPoint.y;
 
-            // Threshold for swipe
             if (Math.abs(diffX) > 50 && Math.abs(diffY) < 50) {
                 setIsFlipped((prev) => !prev);
-                setStartPoint(null); // Reset start point
+                setStartPoint(null);
             }
         }
     };
@@ -72,7 +73,7 @@ function FlipCard({ title, description, className }: Props) {
 
             {/* Back Side */}
             <div className={`absolute w-full h-full rounded-lg shadow-lg flex justify-center text-center items-center ${styles.backfaceHidden} ${styles.rotateY180}`}>
-                <h1 className='text-6xl font-bold absolute opacity-20 select-none'>LexiTON</h1>
+                <Image src={logo} width={245} height={103} className='opacity-10 absolute top-13 select-none' alt='LexiTON logo' priority={true} />
                 <p className="p-4 text-lg">{description}</p>
             </div>
         </div>

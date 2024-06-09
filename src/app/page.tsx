@@ -22,7 +22,7 @@ export default function Home() {
             <Button content="Competetive mode" />
           </div>) : (
             <div className={"mt-8 text-center flex justify-center items-center h-full"}>
-              <h1 className={"text-2xl"}>Connect your Ton wallet before</h1>
+              <h1 className={"text-2xl"}>Connect your TON wallet to continue</h1>
             </div>
           )
         }
