@@ -4,7 +4,6 @@ import { useTonAddress } from '@tonconnect/ui-react';
 import { useEffect, useState } from 'react';
 import { getLessonByLanguageAndLevel, updateUserScore } from '@/app/lib/api';
 
-
 const useGame = (courseLevel?: string) => {
   const address = useTonAddress();
 
@@ -17,16 +16,16 @@ const useGame = (courseLevel?: string) => {
   const [isActiveTimer, setIsActiveTimer] = useState(false);
   const [isFinishedTimer, setIsFinishedTimer] = useState(false);
 
-  const [ correctAnswers, setCorrectAnswer ] = useState(0);
-  const [ timeForLesson, setTimeForLesson ] = useState<string>("");
+  const [correctAnswers, setCorrectAnswer] = useState(0);
+  const [timeForLesson, setTimeForLesson] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
-     if(courseLevel) {
-       const info = await getLessonByLanguageAndLevel(courseLevel)
-       setGameData(info);
-     }
-    }
+      if (courseLevel) {
+        const info = await getLessonByLanguageAndLevel(courseLevel);
+        setGameData(info);
+      }
+    };
     void fetchData();
   }, [courseLevel]);
 
@@ -48,17 +47,16 @@ const useGame = (courseLevel?: string) => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       if (isFinish) {
-        setTimeForLesson(() => formatTime())
+        setTimeForLesson(() => formatTime());
         setIsActiveTimer(false);
         setIsFinishedTimer(true);
 
-        await updateUserScore(address, correctAnswers * 10)
+        await updateUserScore(address, correctAnswers * 10);
       }
-    }
+    };
 
     void fetchData();
   }, [isFinish]);
@@ -82,8 +80,8 @@ const useGame = (courseLevel?: string) => {
   const stepsHandler = (value: string) => {
     const nextStep = Math.min(activeStep + 1, gameData.length);
     setActiveStep(nextStep);
-    if(value === gameData[activeStep].correct_answer) {
-      setCorrectAnswer(prevValue => prevValue + 1);
+    if (value === gameData[activeStep].correct_answer) {
+      setCorrectAnswer((prevValue) => prevValue + 1);
     }
     if (nextStep === gameData.length) {
       setIsFinish(true);

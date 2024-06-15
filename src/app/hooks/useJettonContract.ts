@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Address, fromNano, OpenedContract, toNano } from '@ton/core';
+import { useEffect, useState } from 'react';
 import { MintPublic, SampleJetton } from '../wrapers/SampleJetton';
 import { JettonDefaultWallet } from '../wrapers/SampleJettonWallet';
 import { useAsyncInitialize } from './useAsyncInitialize';
@@ -47,7 +47,7 @@ export function useJettonContract() {
   return {
     jettonWalletAddress: jettonWalletContract?.address.toString(),
     balance: balance,
-    mint: (amount) => {
+    mint: (amount: any) => {
       const message: MintPublic = {
         $$type: 'MintPublic',
         amount: amount,
