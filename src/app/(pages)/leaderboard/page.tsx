@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { getUsers } from '@/app/lib/api';
 import { truncateWithEllipsis } from '@/app/lib/helpers/truncate';
 import Button from '@/app/components/Button/Button';
-import { useJettonContract } from '@/app/hooks/useJettonContract';
+import { useJettonContract } from '@/app/lib/hooks/use-jetton-contract';
 
 const getClassNames = (index: number, data: any[]) => {
   if (index === 0) return 'bg-[#8203b4]';

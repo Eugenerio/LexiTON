@@ -1,8 +1,8 @@
 import { getHttpEndpoint } from '@orbs-network/ton-access';
 import { CHAIN } from '@tonconnect/ui-react';
 import { TonClient } from '@ton/ton';
-import { useAsyncInitialize } from './useAsyncInitialize';
-import { useTonConnect } from './useTonConnect';
+import { useAsyncInitialize } from './use-async-initialize';
+import { useTonConnect } from './use-ton-connect';
 
 export function useTonClient() {
   const { network } = useTonConnect();

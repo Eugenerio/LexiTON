@@ -2,9 +2,9 @@ import { Address, fromNano, OpenedContract, toNano } from '@ton/core';
 import { useEffect, useState } from 'react';
 import { MintPublic, SampleJetton } from '../wrapers/SampleJetton';
 import { JettonDefaultWallet } from '../wrapers/SampleJettonWallet';
-import { useAsyncInitialize } from './useAsyncInitialize';
-import { useTonClient } from './useTonClient';
-import { useTonConnect } from './useTonConnect';
+import { useAsyncInitialize } from './use-async-initialize';
+import { useTonClient } from './use-ton-client';
+import { useTonConnect } from './use-ton-connect';
 
 const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
