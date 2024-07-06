@@ -1,0 +1,23 @@
+.transformStylePreserve3d {
+  transform-style: preserve-3d;
+}
+
+.backfaceHidden {
+  backface-visibility: hidden;
+}
+
+.rotateY180 {
+  transform: rotateY(180deg);
+}
+
+.background{
+  background: url('../../images/LoaderBackground.png') !important;
+  background-size: contain;
+  overflow: hidden;
+}
+
+.preBackground{
+  backdrop-filter: blur(70px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75); 
+}

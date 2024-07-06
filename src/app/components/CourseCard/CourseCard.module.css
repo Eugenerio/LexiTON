@@ -1,0 +1,12 @@
+.background{
+    backdrop-filter: blur(70px) saturate(180%);
+   -webkit-backdrop-filter: blur(16px) saturate(180%);
+   background-color: rgba(17, 25, 40, 0.75);
+   transition: background-color 0.1s;
+}
+
+.background:hover{
+    backdrop-filter: blur(70px) saturate(180%);
+   -webkit-backdrop-filter: blur(16px) saturate(180%);
+   background-color: rgba(0, 0, 0, 0.75);
+}

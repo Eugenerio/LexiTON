@@ -1,0 +1,11 @@
+.background {
+    backdrop-filter: blur(50px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.75);
+}
+
+
+.finish_bg{
+  background: url('../../images/LoaderBackground.png') !important;
+  background-size: contain;
+}

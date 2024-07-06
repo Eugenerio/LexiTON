@@ -1,6 +1,7 @@
 'use client';
 
-import { SDKProvider, DisplayGate, useMiniApp } from '@tma.js/sdk-react';
+import { SDKProvider, DisplayGate } from '@tma.js/sdk-react';
+import { THEME, TonConnectUIProvider } from '@tonconnect/ui-react';
 import { options } from './config/tma';
 
 function SDKProviderError({ error }: { error: unknown }) {
@@ -29,9 +30,15 @@ export default function Providers({
 }>) {
   return (
     <SDKProvider options={options}>
-      <DisplayGate error={SDKProviderError} loading={SDKProviderLoading} initial={SDKInitialState}>
-        {children}
-      </DisplayGate>
+      <TonConnectUIProvider
+        // ngrok link before slash
+        manifestUrl={'https://75ac-2a00-f41-181d-6669-edd0-1078-362a-ffa6.ngrok-free.app/tonconnect-manifest.json'}
+        uiPreferences={{ theme: THEME.DARK }}
+      >
+        <DisplayGate error={SDKProviderError} loading={SDKProviderLoading} initial={SDKInitialState}>
+          {children}
+        </DisplayGate>
+      </TonConnectUIProvider>
     </SDKProvider>
   );
 }

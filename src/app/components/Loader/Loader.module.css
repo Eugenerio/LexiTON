@@ -1,0 +1,20 @@
+.background {
+  background: url('../../images/LoaderBackground.png') no-repeat center center;
+  background-size: cover;
+}
+
+.appear {
+  animation: appear 1.6s;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
